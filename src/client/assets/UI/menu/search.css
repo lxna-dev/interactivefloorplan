@@ -1,0 +1,197 @@
+.imp-search-box {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  padding: 15px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  width: 100%;
+  display: flex;
+}
+
+.imp-search-box-input-wrap {
+  position: relative;
+  flex: 1;
+}
+
+.imp-search-box-input-wrap input {
+  font-size: 14px;
+  height: 40px;
+  padding: 0 35px 0 15px;
+  width: 100%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  outline: 0;
+  border-radius: 20px;
+  margin: 0;
+}
+
+.imp-search-box-input-wrap .imp-icon {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  padding: 13px;
+  right: 0;
+  top: 0;
+  box-sizing: content-box;
+}
+
+.imp-search-box-input-wrap .imp-icon * {
+  pointer-events: none;
+}
+
+.imp-search-box-input-wrap .imp-icon.imp-clear-search {
+  display: none;
+  cursor: pointer;
+}
+
+.imp-searching .imp-search-box-input-wrap .imp-icon.imp-search {
+  display: none;
+}
+
+.imp-searching .imp-search-box-input-wrap .imp-icon.imp-clear-search {
+  display: block;
+}
+
+.imp-search-highlight {
+  color: black !important;
+  background: #fff05e;
+  border-radius: 2px;
+}
+
+/* Mobile */
+
+.imp-search-box {
+  background: white;
+}
+
+.imp-search-box .imp-search-box-input-wrap input {
+  color: black;
+  background: #f3f3f3;
+}
+
+.imp-search-box .imp-search-box-input-wrap input:focus {
+  background: #e9e9e9;
+}
+
+.imp-search-box .imp-search-box-input-wrap input::placeholder {
+  color: #adadad;
+}
+
+.imp-search-box .imp-search-box-input-wrap .imp-icon.imp-search {
+  fill: #adadad;
+}
+
+.imp-search-box .imp-search-box-input-wrap .imp-icon.imp-clear-search {
+  fill: black;
+}
+
+/* Embedded menu styles */
+
+.imp-object-menu-on-top .imp-search-box {
+  position: relative;
+  padding: 0;
+  margin-bottom: 15px;
+  background: none !important;
+}
+
+.imp-object-menu-on-top .imp-search-box .imp-search-box-input-wrap input {
+  margin-bottom: 4px;
+}
+
+/* Theme - Light */
+
+.imp-ui-light .imp-search-box {
+  background: white;
+}
+
+.imp-ui-light .imp-search-box .imp-search-box-input-wrap input {
+  color: black;
+  background: #f3f3f3;
+  border: none;
+}
+
+.imp-ui-light .imp-search-box .imp-search-box-input-wrap input:focus {
+  background: #e9e9e9;
+}
+
+.imp-ui-light .imp-search-box .imp-search-box-input-wrap input::placeholder {
+  color: #adadad;
+}
+
+.imp-ui-light .imp-search-box .imp-search-box-input-wrap .imp-icon.imp-search {
+  fill: #adadad;
+}
+
+.imp-ui-light .imp-search-box .imp-search-box-input-wrap .imp-icon.imp-clear-search {
+  fill: black;
+}
+
+.imp-ui-light.imp-object-menu-on-top .imp-search-box .imp-search-box-input-wrap input {
+  color: black;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  border: 1px solid #00000060;
+}
+
+.imp-ui-light.imp-object-menu-on-top .imp-search-box .imp-search-box-input-wrap input::placeholder {
+  color: #c7c7c7;
+}
+
+.imp-ui-light.imp-object-menu-on-top .imp-search-box .imp-search-box-input-wrap .imp-icon.imp-search {
+  fill: #c7c7c7;
+}
+
+.imp-ui-light.imp-object-menu-on-top .imp-search-box .imp-search-box-input-wrap .imp-icon.imp-clear-search {
+  fill: black;
+}
+
+/* Theme - Dark */
+
+.imp-ui-dark .imp-search-box {
+  background: #222;
+}
+
+.imp-ui-dark .imp-search-box .imp-search-box-input-wrap input {
+  color: white;
+  background: #333;
+  border: none;
+}
+
+.imp-ui-dark .imp-search-box .imp-search-box-input-wrap input:focus {
+  background: #444;
+}
+
+.imp-ui-dark .imp-search-box .imp-search-box-input-wrap input::placeholder {
+  color: #777;
+}
+
+.imp-ui-dark .imp-search-box .imp-search-box-input-wrap .imp-icon.imp-search {
+  fill: #666;
+}
+
+.imp-ui-dark .imp-search-box .imp-search-box-input-wrap .imp-icon.imp-clear-search {
+  fill: white;
+}
+
+.imp-ui-dark.imp-object-menu-on-top .imp-search-box .imp-search-box-input-wrap input {
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.imp-ui-dark.imp-object-menu-on-top .imp-search-box .imp-search-box-input-wrap input::placeholder {
+  color: #c7c7c7;
+}
+
+.imp-ui-dark.imp-object-menu-on-top .imp-search-box .imp-search-box-input-wrap .imp-icon.imp-search {
+  fill: #c7c7c7;
+}
+
+.imp-ui-dark.imp-object-menu-on-top .imp-search-box .imp-search-box-input-wrap .imp-icon.imp-clear-search {
+  fill: white;
+}

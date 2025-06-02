@@ -1,0 +1,45 @@
+{
+  "name": "image-map-pro-editor",
+  "version": "6.0.34",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx webpack --config webpack.dev.js && scp -r dist/* ../wp/js/editor/",
+    "build:production": "cross-env NODE_ENV=production npx webpack --config webpack.production.js && scp -r dist/* ../wp/js/editor/",
+    "watch": "webpack --watch --config webpack.dev.js",
+    "deploy:staging": "aws s3 sync ./dist s3://image-map-pro-editor/",
+    "open:staging": "open http://image-map-pro-editor.s3-website.eu-central-1.amazonaws.com",
+    "dev": "npx webpack serve --config ./webpack.dev.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/plugin-transform-runtime": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "@reduxjs/toolkit": "^1.8.2",
+    "@tailwindcss/forms": "^0.5.2",
+    "autoprefixer": "^10.4.7",
+    "babel-loader": "^8.2.5",
+    "babel-polyfill": "^6.26.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.7.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "path": "^0.12.7",
+    "postcss-loader": "^6.2.1",
+    "redux-undo": "^1.0.1",
+    "style-loader": "^3.3.1",
+    "svelte": "^3.48.0",
+    "svelte-loader": "^3.1.2",
+    "svelte-preprocess": "^4.10.6",
+    "tailwindcss": "^3.0.24",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.15.1",
+    "webpack-merge": "^5.8.0"
+  },
+  "dependencies": {
+    "svg-parser": "^2.0.4"
+  }
+}

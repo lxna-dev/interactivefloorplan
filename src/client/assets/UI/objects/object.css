@@ -1,0 +1,58 @@
+.imp-object {
+  position: absolute;
+  cursor: pointer;
+  pointer-events: all;
+  transition: all 0.15s cubic-bezier(0.55, 0, 0.1, 1);
+  -moz-transition: all 0.15s cubic-bezier(0.55, 0, 0.1, 1);
+  -webkit-transition: all 0.15s cubic-bezier(0.55, 0, 0.1, 1);
+
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.imp-object-static,
+.imp-object-static * {
+  cursor: default;
+  pointer-events: none !important;
+}
+
+.imp-object-svg-single,
+.imp-object-svg,
+.imp-object-poly {
+  pointer-events: none;
+}
+.imp-object-svg-single *,
+.imp-object-svg *,
+.imp-object-poly * {
+  pointer-events: all;
+}
+
+/* image backgrounds */
+
+.imp-object img {
+  width: 100%;
+}
+
+.imp-image-backgrounds {
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.imp-object-background-image {
+  position: absolute;
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* Glow */
+
+.imp-glowing-objects .imp-object {
+  animation: ObjectGlowAnimation linear 1.5s;
+  animation-iteration-count: infinite;
+}

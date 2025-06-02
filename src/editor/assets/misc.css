@@ -1,0 +1,11 @@
+.imp-object-icon-shadow {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 0;
+  transform: scale(1, 0.25);
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&amp;0.53+0,0.3+10,0.13+28,0.04+44,0+67 */
+  background: -moz-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.53) 0%, rgba(0, 0, 0, 0.3) 10%, rgba(0, 0, 0, 0.13) 28%, rgba(0, 0, 0, 0.04) 44%, rgba(0, 0, 0, 0) 67%, rgba(0, 0, 0, 0) 100%);
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.53) 0%, rgba(0, 0, 0, 0.3) 10%, rgba(0, 0, 0, 0.13) 28%, rgba(0, 0, 0, 0.04) 44%, rgba(0, 0, 0, 0) 67%, rgba(0, 0, 0, 0) 100%);
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.53) 0%, rgba(0, 0, 0, 0.3) 10%, rgba(0, 0, 0, 0.13) 28%, rgba(0, 0, 0, 0.04) 44%, rgba(0, 0, 0, 0) 67%, rgba(0, 0, 0, 0) 100%);
+}

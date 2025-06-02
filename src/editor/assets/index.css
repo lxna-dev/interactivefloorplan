@@ -1,0 +1,155 @@
+/* @import 'https://dfpyxk7hlnlki.cloudfront.net/image-map-pro/fontawesome-v4/css/font-awesome.min.css'; */
+@import './fontawesome/css/fontawesome.min.css';
+@import './fontawesome/css/all.min.css';
+@import './misc.css';
+@import '../../client/assets/UI/tooltip/tooltip.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  #imp-app {
+    @apply text-theme-800 dark:text-theme-100 text-sm;
+  }
+  a {
+    @apply text-primary-500;
+  }
+
+  /* UI Styles */
+  .ui {
+    @apply border border-theme-200 dark:border-theme-700;
+    @apply bg-white dark:bg-theme-800;
+    @apply rounded shadow-lg;
+    /* @apply backdrop-blur-2xl bg-opacity-90 dark:bg-opacity-90; */
+  }
+  .pretty-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+  .pretty-scroll::-webkit-scrollbar-thumb {
+    @apply bg-theme-400 outline-none rounded-full;
+  }
+
+  /* Component: form-control */
+
+  .form-control-bg {
+    @apply bg-theme-500;
+    @apply bg-opacity-10 dark:bg-opacity-30;
+  }
+  .form-control-ring {
+    @apply ring-primary-500 focus:ring-2;
+  }
+  .form-control-bg-error {
+    @apply bg-danger-500;
+    @apply bg-opacity-10 dark:bg-opacity-30;
+    @apply placeholder-danger-300 dark:placeholder-danger-500;
+  }
+  .form-control-ring-error {
+    @apply ring-danger-500 focus:ring-2;
+  }
+  .form-control-border {
+    @apply border border-theme-500 border-opacity-30 dark:border-opacity-30;
+  }
+  .form-control-shadow {
+    @apply shadow dark:shadow-md active:shadow-none dark:active:shadow-none;
+  }
+  .btn {
+    @apply text-theme-800 dark:text-theme-100 text-xs;
+    @apply cursor-pointer select-none transition-all duration-100;
+    @apply active:border-primary-500;
+    @apply bg-white             hover:bg-theme-100        active:bg-primary-500       active:text-white;
+    @apply dark:bg-theme-700    dark:hover:bg-theme-600   dark:active:bg-primary-500  dark:active:text-white;
+  }
+  .btn-transparent {
+    @apply bg-transparent        hover:bg-theme-200        active:bg-primary-500       active:text-white;
+    @apply dark:bg-transparent   dark:hover:bg-theme-700   dark:active:bg-primary-500  dark:active:text-white;
+  }
+  .btn-primary {
+    @apply border-none;
+    @apply bg-primary-500       hover:bg-primary-600          active:bg-primary-700       text-white;
+    @apply dark:bg-primary-600  dark:hover:bg-primary-500     dark:active:bg-primary-400  dark:active:text-white;
+  }
+  .btn-danger {
+    @apply border-none;
+    @apply bg-danger-500       hover:bg-danger-600          active:bg-danger-700       text-white;
+    @apply dark:bg-danger-600  dark:hover:bg-danger-500     dark:active:bg-danger-400  dark:active:text-white;
+  }
+  .btn-success {
+    @apply border-none;
+    @apply bg-green-500       hover:bg-green-600          active:bg-green-700       text-white;
+    @apply dark:bg-green-600  dark:hover:bg-green-500     dark:active:bg-green-400  dark:active:text-white;
+  }
+  .btn-light {
+    @apply active:border-theme-300 dark:active:border-theme-500;
+    @apply bg-white             hover:bg-theme-100        active:bg-theme-200       active:text-white;
+    @apply dark:bg-theme-800    dark:hover:bg-theme-700   dark:active:bg-theme-600  dark:active:text-white;
+  }
+  .btn-disabled {
+    @apply opacity-50 pointer-events-none cursor-default;
+  }
+  .btn-group-btn {
+    @apply hover:bg-theme-200 dark:hover:bg-theme-700;
+  }
+  .btn-group-btn.btn-group-selected {
+    @apply text-white dark:text-white;
+    @apply bg-primary-500 dark:bg-primary-500;
+    @apply hover:bg-primary-500 dark:hover:bg-primary-500;
+  }
+  .checkbox {
+    @apply text-primary-500;
+    @apply bg-white dark:bg-theme-500 dark:bg-opacity-30;
+    @apply border;
+    @apply rounded;
+    @apply w-4 h-4 p-0 inline-block align-middle;
+    @apply select-none;
+    @apply appearance-none;
+    @apply transition-all duration-150;
+  }
+  .checkbox:hover {
+    @apply bg-theme-100 dark:bg-theme-500 dark:bg-opacity-50;
+  }
+  .checkbox:checked:hover {
+    @apply text-primary-600 dark:text-primary-600 dark:bg-primary-600;
+  }
+  .checkbox:checked {
+    @apply border-transparent;
+    @apply bg-current;
+  }
+  .checkbox:checked {
+    background-image: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27white%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z%27/%3e%3c/svg%3e');
+  }
+  .checkbox:focus {
+    @apply ring-2 ring-primary-500 ring-offset-1 ring-offset-transparent border-none;
+  }
+
+  /* Component: selection */
+  .point {
+    position: absolute;
+    border: 1px solid white;
+    background: black;
+    border-radius: 20px;
+    width: 10px;
+    height: 10px;
+    margin: -5px 0 0 -5px;
+    cursor: pointer;
+  }
+  .point:hover {
+    background: white;
+    border-color: black;
+  }
+  .point.temporary-point {
+    @apply bg-primary-500 border-white transition-transform;
+  }
+  .point.temporary-point:hover {
+    @apply scale-150;
+  }
+
+  /* Component: topbar-button */
+  .shortcut-button {
+    @apply rounded bg-theme-300 font-mono text-theme-800 font-normal px-1.5 pb-1 leading-5 inline-block mx-1 first:ml-2 last:mr-0;
+    min-width: 1.5rem;
+    box-shadow: 0 -4px inset rgba(0, 0, 0, 0.3);
+  }
+  .shortcut-button-large {
+    @apply text-xl leading-5;
+  }
+}

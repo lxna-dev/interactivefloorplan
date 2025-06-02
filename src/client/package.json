@@ -1,0 +1,30 @@
+{
+  "name": "image-map-pro-client",
+  "version": "6.0.34",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "build": "npx webpack --config webpack.dev.js",
+    "build:production": "npx webpack --config webpack.production.js && scp ./dist/main.js ../wp/js/client/main.js",
+    "watch": "webpack --watch --config webpack.dev.js",
+    "copy-to-site": "scp ./dist/main.js ../../website/static/image-map-pro.min.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/plugin-transform-runtime": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "babel-loader": "^8.2.5",
+    "babel-polyfill": "^6.26.0",
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^6.7.1",
+    "file-loader": "^6.2.0",
+    "path": "^0.12.7",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.10.0",
+    "webpack-merge": "^5.8.0"
+  }
+}

@@ -1,0 +1,21 @@
+@import url('ClientAssets/debug.css');
+@import url('ClientAssets/imageMap.css');
+@import url('ClientAssets/fullscreen.css');
+@import url('ClientAssets/layers.css');
+
+@import url('ClientAssets/UI/tooltip/tooltip.css');
+@import url('ClientAssets/UI/tooltip/tooltipFullscreen.css');
+@import url('ClientAssets/UI/ui.css');
+@import url('ClientAssets/UI/fullscreenButton.css');
+@import url('ClientAssets/UI/navigator.css');
+@import url('ClientAssets/UI/zoomButtons.css');
+@import url('ClientAssets/UI/objects/object.css');
+@import url('ClientAssets/UI/objects/text.css');
+@import url('ClientAssets/UI/objects/spot.css');
+@import url('ClientAssets/UI/menu/menu.css');
+@import url('ClientAssets/UI/menu/list.css');
+@import url('ClientAssets/UI/menu/item.css');
+@import url('ClientAssets/UI/menu/itemArtboard.css');
+@import url('ClientAssets/UI/menu/search.css');
+@import url('ClientAssets/UI/menu/openButton.css');
+@import url('ClientAssets/UI/menu/closeButton.css');

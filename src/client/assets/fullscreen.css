@@ -1,0 +1,42 @@
+body.imp-fullscreen-mode {
+  overflow: hidden !important;
+}
+
+#imp-fullscreen-container {
+  position: fixed;
+  z-index: 999995;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: flex;
+  background: #0a0a0a;
+}
+
+#imp-fullscreen-container #imp-fullscreen-image-map {
+  width: 100%;
+  height: 100%;
+}
+
+#imp-fullscreen-container .imp-container {
+  height: 100%;
+}
+
+#imp-fullscreen-container .imp-ui-wrap {
+  width: 100%;
+  height: 100%;
+}
+
+#imp-fullscreen-container .imp-canvas-wrap {
+  position: inherit;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#imp-fullscreen-container .imp-canvas {
+  overflow: visible;
+}

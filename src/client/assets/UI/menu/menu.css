@@ -1,0 +1,96 @@
+.imp-object-menu {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 240px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.imp-object-menu.imp-has-search {
+  padding-top: 70px;
+}
+
+.imp-object-menu.imp-object-menu-right {
+  right: 0;
+  left: auto;
+}
+
+.imp-object-menu.imp-detached {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: auto;
+  flex-shrink: inherit;
+}
+
+.imp-object-menu.imp-mobile {
+  border-left: none;
+  position: fixed;
+  left: auto;
+  right: -100%;
+  top: 0;
+  width: 240px;
+  z-index: 999994;
+  transition: all 0.25s cubic-bezier(0.55, 0, 0.1, 1);
+  -moz-transition: all 0.25s cubic-bezier(0.55, 0, 0.1, 1);
+  -webkit-transition: all 0.25s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.imp-object-menu.imp-mobile:after {
+  display: block;
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  left: -2px;
+  top: 0;
+  background: #dedede;
+}
+
+.imp-object-menu.imp-mobile.imp-active {
+  position: fixed;
+  right: 0;
+  left: auto;
+  top: 0;
+  width: 240px;
+  z-index: 999996;
+}
+
+/* Mobile */
+
+.imp-object-menu {
+  background: white;
+}
+
+/* Embedded menu styles */
+
+.imp-object-menu-on-top .imp-object-menu {
+  background: transparent !important;
+  border: none !important;
+  padding: 15px;
+}
+
+/* Theme - Light */
+
+.imp-ui-light .imp-object-menu {
+  background: white;
+}
+.imp-ui-light .imp-object-menu.imp-object-menu-left {
+  /* border-right: 1px solid #dedede; */
+}
+.imp-ui-light .imp-object-menu.imp-object-menu-right {
+  /* border-left: 1px solid #dedede; */
+}
+
+/* Theme - Dark */
+
+.imp-ui-dark .imp-object-menu {
+  background: #222;
+  border: none;
+}

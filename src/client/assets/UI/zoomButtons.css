@@ -1,0 +1,68 @@
+.imp-ui-zoom-button {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  text-align: center;
+  z-index: 1;
+  border-radius: 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.imp-ui-zoom-button-zoom-out {
+  border-radius: 0 0 5px 5px;
+}
+
+.imp-ui-zoom-button-zoom-in {
+  border-radius: 5px 5px 0 0;
+}
+
+.imp-ui-zoom-button .imp-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Theme - Light */
+.imp-ui-light .imp-ui-zoom-button {
+  fill: black;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  border: 1px solid #00000060;
+}
+
+.imp-ui-light .imp-ui-zoom-button-zoom-out {
+  border-top: none;
+}
+
+/* Theme - Dark */
+
+.imp-ui-dark .imp-ui-zoom-button {
+  fill: white;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.imp-ui-dark .imp-ui-zoom-button-zoom-out {
+  border-top: none;
+}
