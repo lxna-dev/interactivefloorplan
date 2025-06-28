@@ -3,8 +3,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const body = await req.json();
-  const { propertyId, newStatus } = body;
+  const { propertyId, newStatus } = await req.json();
 
   if (!propertyId || !newStatus) {
     return res.status(400).json({ message: "Missing propertyId or newStatus" });
@@ -15,7 +14,7 @@ export default async function handler(req, res) {
   );
   const { token: accessToken } = await tokenRes.json();
 
-  const updateRes = await fetch(
+  const zohoRes = await fetch(
     `https://creator.zoho.com/api/v2/mobaha_baytiraqi/interactive-floor-plan/form/Properties_List/${propertyId}`,
     {
       method: "PUT",
@@ -29,6 +28,6 @@ export default async function handler(req, res) {
     }
   );
 
-  const result = await updateRes.json();
-  return res.status(updateRes.status).json(result);
+  const result = await zohoRes.json();
+  res.status(zohoRes.status).json(result);
 }
