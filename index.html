@@ -46,15 +46,20 @@
         box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
       }
 
-      /* Polygon status colors */
+      /* Polygon status colors with opacity */
       .available {
         fill: green !important;
+        fill-opacity: 0.6 !important;
       }
+
       .sold {
         fill: red !important;
+        fill-opacity: 0.6 !important;
       }
+
       .under-offer {
         fill: yellow !important;
+        fill-opacity: 0.6 !important;
       }
     </style>
   </head>
@@ -105,8 +110,6 @@
       async function updateFloorPlanStatus() {
         const res = await fetch("/api/properties");
         const result = await res.json();
-
-        console.log(result);
 
         result.data.forEach((record) => {
           const svg = document.querySelector(
