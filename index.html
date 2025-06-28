@@ -47,16 +47,19 @@
       }
 
       /* Polygon status colors with opacity */
-      polygon.available {
+      .available {
         fill: green !important;
+        fill-opacity: 0.6 !important;
       }
 
-      polygon.sold {
+      .sold {
         fill: red !important;
+        fill-opacity: 0.6 !important;
       }
 
-      polygon.under-offer {
+      .under-offer {
         fill: yellow !important;
+        fill-opacity: 0.6 !important;
       }
     </style>
   </head>
@@ -109,22 +112,35 @@
         const result = await res.json();
 
         result.data.forEach((record) => {
-          if (record.Add_Developments?.Development_Name !== "Nairouz") return;
+          if (record["Add_Developments.Development_Name"] !== "Nairouz") return;
+
+          const propertyNumber = record.Property_Number;
+          if (!propertyNumber) return; // Skip if no property number
 
           const svg = document.querySelector(
-            `svg[data-title="${record.Property_Number}"]`
+            `svg[data-title="${propertyNumber}"]`
           );
           const polygon = svg?.querySelector("polygon");
 
           if (polygon) {
             polygon.classList.remove("available", "sold", "under-offer");
 
-            const status = record.Status.toLowerCase().replace(/\s+/g, "-");
-            polygon.classList.add(status);
+            const status = record.Status?.toLowerCase().replace(/\s+/g, "-");
+            if (status) {
+              polygon.classList.add(status);
+              polygon.setAttribute(
+                "fill",
+                {
+                  available: "green",
+                  sold: "red",
+                  "under-offer": "yellow",
+                }[status]
+              ); // ensure fill is updated visually
+            }
 
-            // Add polygon ID to allow editing
-            polygon.dataset.propertyId = record.ID; // Save record ID for update
-            polygon.dataset.propertyTitle = record.Property_Number;
+            // Add metadata for interaction
+            polygon.dataset.propertyId = record.ID;
+            polygon.dataset.propertyTitle = propertyNumber;
           }
         });
       }
