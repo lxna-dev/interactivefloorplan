@@ -112,6 +112,8 @@
         const result = await res.json();
 
         result.data.forEach((record) => {
+          if (record.Add_Developments?.Development_Name !== "Nairouz") return;
+
           const svg = document.querySelector(
             `svg[data-title="${record.Property_Number}"]`
           );
@@ -120,8 +122,12 @@
           if (polygon) {
             polygon.classList.remove("available", "sold", "under-offer");
 
-            const status = record.Status.toLowerCase().replace(/\s+/g, "-"); // e.g. "Under Offer" → "under-offer"
+            const status = record.Status.toLowerCase().replace(/\s+/g, "-");
             polygon.classList.add(status);
+
+            // Add polygon ID to allow editing
+            polygon.dataset.propertyId = record.ID; // Save record ID for update
+            polygon.dataset.propertyTitle = record.Property_Number;
           }
         });
       }
@@ -129,27 +135,21 @@
       setTimeout(updateFloorPlanStatus, 1000);
     </script>
 
-    <!-- Dropdown for status selection -->
+    <!-- Dropdown for status selection and update zoho creator -->
     <script>
       const dropdown = document.getElementById("dropdown");
       const statusSelect = document.getElementById("status-select");
       let currentTarget = null;
 
-      // Prevent dropdown clicks from hiding it
-      dropdown.addEventListener("click", (e) => {
-        e.stopPropagation();
-      });
+      dropdown.addEventListener("click", (e) => e.stopPropagation());
 
-      const attachDropdownListeners = () => {
-        const polygons = document.querySelectorAll("polygon");
-
-        if (!polygons.length) {
-          setTimeout(attachDropdownListeners, 300);
-          return;
-        }
+      // Open dropdown on polygon click
+      function attachPolygonListeners() {
+        const polygons = document.querySelectorAll("polygon[data-property-id]");
 
         polygons.forEach((polygon) => {
           polygon.style.cursor = "pointer";
+
           polygon.addEventListener("click", (e) => {
             e.stopPropagation();
             const rect = polygon.getBoundingClientRect();
@@ -159,18 +159,45 @@
             currentTarget = polygon;
           });
         });
-      };
+      }
 
-      setTimeout(attachDropdownListeners, 800);
+      setTimeout(() => {
+        updateFloorPlanStatus().then(() => {
+          attachPolygonListeners(); // After polygons have loaded
+        });
+      }, 1000);
 
-      statusSelect.addEventListener("change", () => {
-        if (currentTarget) {
+      statusSelect.addEventListener("change", async () => {
+        if (currentTarget && statusSelect.value) {
+          const newStatus = statusSelect.value;
+          const propertyId = currentTarget.dataset.propertyId;
+
+          // Update UI
           currentTarget.classList.remove("available", "sold", "under-offer");
-          if (statusSelect.value) {
-            currentTarget.classList.add(statusSelect.value);
-          }
+          currentTarget.classList.add(newStatus);
+
           dropdown.style.display = "none";
           statusSelect.selectedIndex = 0;
+
+          // Update in Zoho Creator
+          const accessToken = await getAccessToken();
+          const response = await fetch(
+            `https://creator.zoho.com/api/v2/mobaha_baytiraqi/interactive-floor-plan/form/Properties_List/${propertyId}`,
+            {
+              method: "PUT",
+              headers: {
+                Authorization: `Zoho-oauthtoken ${accessToken}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                data: { Status: newStatus.replace("-", " ") },
+              }),
+            }
+          );
+
+          if (!response.ok) {
+            console.error("Failed to update status in Zoho Creator");
+          }
         }
       });
 
@@ -180,7 +207,7 @@
       });
     </script>
 
-    <!-- Image Map Pro -->
+    <!-- Dropdown for status selection -->
     <script>
       ImageMapPro.init("#image-map-pro", {
         id: "5d0a40b1-bcc5-4826-986b-9a8372a8630b",
@@ -1236,33 +1263,7 @@
                 y: 16.734298070271812,
                 width: 1.3340212264150946,
                 height: 2.9557291666666643,
-                tooltip_content: [
-                  {
-                    type: "Button",
-                    text: "Button",
-                    url: "#",
-                    script: "",
-                    newTab: false,
-                    other: { id: "", classes: "", css: "" },
-                    style: {
-                      backgroundColor: "#2196f3",
-                      borderRadius: 10,
-                      fontFamily: "sans-serif",
-                      fontWeight: 700,
-                      fontSize: 14,
-                      lineHeight: 44,
-                      color: "#ffffff",
-                      display: "inline-block",
-                    },
-                    boxModel: {
-                      width: "auto",
-                      height: 44,
-                      margin: { top: 0, bottom: 0, left: 0, right: 0 },
-                      padding: { top: 10, bottom: 10, left: 10, right: 10 },
-                    },
-                    id: "221eb744-8f1e-4e98-8e73-c00ed416b767",
-                  },
-                ],
+                tooltip: { enable_tooltip: false },
                 x_image_background: 5.099951546147184,
                 y_image_background: 16.734298070271812,
                 points: [
