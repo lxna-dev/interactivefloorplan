@@ -103,17 +103,7 @@
       }
 
       async function updateFloorPlanStatus() {
-        const token = await getAccessToken();
-
-        const res = await fetch(
-          "https://creator.zoho.com/api/v2/mobaha_baytiraqi/interactive-floor-plan/report/Properties_List",
-          {
-            headers: {
-              Authorization: `Zoho-oauthtoken ${token}`,
-            },
-          }
-        );
-
+        const res = await fetch("/api/properties");
         const result = await res.json();
 
         result.data.forEach((record) => {
@@ -124,13 +114,12 @@
           if (polygon) {
             polygon.classList.remove("available", "sold", "under-offer");
 
-            const status = record.Status.toLowerCase().replace(" ", "-"); // "Under Offer" → "under-offer"
-            polygon.classList.add(status);
+            const status = record.Status.toLowerCase().replace(" ", "-");
+            polygon.classList.add(status); // adds class like `available`, `sold`, etc.
           }
         });
       }
 
-      // Wait for polygons to render, then apply status
       setTimeout(updateFloorPlanStatus, 1000);
     </script>
 
