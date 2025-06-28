@@ -206,19 +206,16 @@
 
           // Update in Zoho Creator
           const accessToken = await getAccessToken();
-          const response = await fetch(
-            `https://creator.zoho.com/api/v2/mobaha_baytiraqi/interactive-floor-plan/form/Properties_List/${propertyId}`,
-            {
-              method: "PUT",
-              headers: {
-                Authorization: `Zoho-oauthtoken ${accessToken}`,
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                data: { Status: newStatus.replace("-", " ") },
-              }),
-            }
-          );
+          const response = await fetch("/api/update-status", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              propertyId,
+              newStatus: newStatus.replace("-", " "),
+            }),
+          });
 
           if (!response.ok) {
             console.error("Failed to update status in Zoho Creator");
