@@ -70,7 +70,6 @@
     </div>
     <script src="image-map-pro.min.js"></script>
 
-    <!-- Zoho API -->
     <!-- Zoho API + Floor Plan Update -->
     <script>
       async function getAccessToken() {
@@ -86,7 +85,7 @@
 
         // Otherwise, get a fresh one from your secure backend
         const response = await fetch(
-          "https://your-vercel-project.vercel.app/api/zoho-token"
+          "https://interactivefloorplan.vercel.app/api/zoho-token"
         );
         const data = await response.json();
         const token = data.token;
