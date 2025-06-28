@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
       const { token: accessToken } = await tokenRes.json();
 
       const zohoRes = await fetch(
-        `https://www.zohoapis.com/creator/v2.1/data/mobaha_baytiraqi/interactive-floor-plan/report/Properties_List/${propertyId}`,
+        `https://www.zohoapis.com/creator/v2.1/data/mobaha_baytiraqi/interactive-floor-plan/form/Add_Properties/${propertyId}`,
         {
           method: "PUT",
           headers: {
