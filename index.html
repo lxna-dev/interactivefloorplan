@@ -107,15 +107,16 @@
         const result = await res.json();
 
         result.data.forEach((record) => {
-          const polygon = [...document.querySelectorAll("polygon")].find(
-            (p) => p.getAttribute("title") === record.Property_Number
+          const svg = document.querySelector(
+            `svg[data-title="${record.Property_Number}"]`
           );
+          const polygon = svg?.querySelector("polygon");
 
           if (polygon) {
             polygon.classList.remove("available", "sold", "under-offer");
 
-            const status = record.Status.toLowerCase().replace(" ", "-");
-            polygon.classList.add(status); // adds class like `available`, `sold`, etc.
+            const status = record.Status.toLowerCase().replace(/\s+/g, "-"); // e.g. "Under Offer" → "under-offer"
+            polygon.classList.add(status);
           }
         });
       }
