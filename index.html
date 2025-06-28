@@ -106,6 +106,8 @@
         const res = await fetch("/api/properties");
         const result = await res.json();
 
+        console.log(result);
+
         result.data.forEach((record) => {
           const svg = document.querySelector(
             `svg[data-title="${record.Property_Number}"]`
