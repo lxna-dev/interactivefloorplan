@@ -1,20 +1,19 @@
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   if (req.method !== "PUT") {
-    return res.status(405).json({ message: "Method Not Allowed" });
+    res.statusCode = 405;
+    res.end(JSON.stringify({ message: "Method Not Allowed" }));
+    return;
   }
 
   let body = "";
-  req.on("data", (chunk) => {
-    body += chunk;
-  });
-
+  req.on("data", (chunk) => (body += chunk));
   req.on("end", async () => {
     const { propertyId, newStatus } = JSON.parse(body);
 
     if (!propertyId || !newStatus) {
-      return res
-        .status(400)
-        .json({ message: "Missing propertyId or newStatus" });
+      res.statusCode = 400;
+      res.end(JSON.stringify({ message: "Missing propertyId or newStatus" }));
+      return;
     }
 
     try {
@@ -38,11 +37,13 @@ export default async function handler(req, res) {
       );
 
       const result = await zohoRes.json();
-      res.status(zohoRes.status).json(result);
+      res.statusCode = zohoRes.status;
+      res.end(JSON.stringify(result));
     } catch (err) {
-      res
-        .status(500)
-        .json({ error: "Internal Server Error", details: err.message });
+      res.statusCode = 500;
+      res.end(
+        JSON.stringify({ error: "Internal Server Error", details: err.message })
+      );
     }
   });
-}
+};
