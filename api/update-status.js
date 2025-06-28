@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
       const { token: accessToken } = await tokenRes.json();
 
       const zohoRes = await fetch(
-        `https://creator.zoho.com/api/v2/mobaha_baytiraqi/interactive-floor-plan/form/Properties_List/${propertyId}`,
+        `https://www.zohoapis.com/creator/v2.1/data/mobaha_baytiraqi/interactive-floor-plan/report/Properties_List/${propertyId}`,
         {
           method: "PUT",
           headers: {
@@ -31,7 +31,9 @@ module.exports = async (req, res) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            data: { Status: newStatus },
+            data: {
+              Status: newStatus,
+            },
           }),
         }
       );
