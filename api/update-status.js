@@ -3,15 +3,19 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const { propertyId, newStatus } = req.body;
+  const body = await req.json();
+  const { propertyId, newStatus } = body;
 
-  // Get your Zoho token securely
+  if (!propertyId || !newStatus) {
+    return res.status(400).json({ message: "Missing propertyId or newStatus" });
+  }
+
   const tokenRes = await fetch(
     "https://interactivefloorplan.vercel.app/api/zoho-token"
   );
   const { token: accessToken } = await tokenRes.json();
 
-  const response = await fetch(
+  const updateRes = await fetch(
     `https://creator.zoho.com/api/v2/mobaha_baytiraqi/interactive-floor-plan/form/Properties_List/${propertyId}`,
     {
       method: "PUT",
@@ -25,6 +29,6 @@ export default async function handler(req, res) {
     }
   );
 
-  const result = await response.json();
-  return res.status(response.status).json(result);
+  const result = await updateRes.json();
+  return res.status(updateRes.status).json(result);
 }
