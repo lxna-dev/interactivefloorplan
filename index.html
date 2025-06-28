@@ -47,19 +47,16 @@
       }
 
       /* Polygon status colors with opacity */
-      .available {
+      polygon.available {
         fill: green !important;
-        fill-opacity: 0.6 !important;
       }
 
-      .sold {
+      polygon.sold {
         fill: red !important;
-        fill-opacity: 0.6 !important;
       }
 
-      .under-offer {
+      polygon.under-offer {
         fill: yellow !important;
-        fill-opacity: 0.6 !important;
       }
     </style>
   </head>
@@ -163,7 +160,7 @@
 
       setTimeout(() => {
         updateFloorPlanStatus().then(() => {
-          attachPolygonListeners(); // After polygons have loaded
+          attachPolygonListeners();
         });
       }, 1000);
 
