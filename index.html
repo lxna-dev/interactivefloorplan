@@ -182,6 +182,26 @@
             dropdown.style.left = rect.left + window.scrollX + "px";
             dropdown.style.display = "block";
             currentTarget = polygon;
+
+            // Reset dropdown
+            statusSelect.selectedIndex = 0;
+            [...statusSelect.options].forEach((opt) => (opt.disabled = false));
+
+            // Disable the current status option
+            const currentClass = currentTarget.classList.contains("available")
+              ? "Available"
+              : currentTarget.classList.contains("sold")
+              ? "Sold"
+              : currentTarget.classList.contains("under-offer")
+              ? "Under Offer"
+              : null;
+
+            if (currentClass) {
+              const match = [...statusSelect.options].find(
+                (opt) => opt.value.toLowerCase() === currentClass.toLowerCase()
+              );
+              if (match) match.disabled = true;
+            }
           });
         });
       }
