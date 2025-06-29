@@ -194,31 +194,28 @@
 
       statusSelect.addEventListener("change", async () => {
         if (currentTarget && statusSelect.value) {
-          const newStatus = statusSelect.value;
+          const selected = statusSelect.value;
+          const newStatus = selected.replace("-", " ");
           const propertyId = currentTarget.dataset.propertyId;
 
           // Update UI
           currentTarget.classList.remove("available", "sold", "under-offer");
-          currentTarget.classList.add(newStatus);
+          currentTarget.classList.add(selected);
 
           dropdown.style.display = "none";
           statusSelect.selectedIndex = 0;
 
-          // Update in Zoho Creator
-          const accessToken = await getAccessToken();
-          const response = await fetch(
-            "https://interactivefloorplan.vercel.app/api/update-status",
-            {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                propertyId,
-                newStatus: "Available", // or "Sold", etc.
-              }),
-            }
-          );
+          // 🔁 Send dynamic newStatus
+          const response = await fetch("/api/update-status", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              propertyId,
+              newStatus, // 👈 sends "Available", "Sold", etc.
+            }),
+          });
 
           if (!response.ok) {
             console.error("Failed to update status in Zoho Creator");
