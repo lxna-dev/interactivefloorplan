@@ -16,33 +16,38 @@ export default async function handler(req, res) {
       "https://www.zohoapis.com/creator/v2.1/mobaha_baytiraqi/interactive-floor-plan/report/Properties_List";
 
     let allData = [];
-    let nextCursor = null;
+    let hasMore = true;
+    let cursor = null;
 
-    do {
-      const url = new URL(baseUrl);
-      url.searchParams.set("max_records", "1000");
-
+    while (hasMore) {
       const headers = {
         Authorization: `Zoho-oauthtoken ${accessToken}`,
       };
 
-      if (nextCursor) {
-        headers["record_cursor"] = nextCursor;
+      if (cursor) {
+        headers["record_cursor"] = cursor;
       }
 
-      const response = await fetch(url.toString(), { headers });
-
-      if (!response.ok) {
-        const err = await response.json();
-        return res.status(500).json({ error: "Zoho API error", details: err });
-      }
+      const response = await fetch(`${baseUrl}?max_records=1000`, {
+        headers,
+      });
 
       const data = await response.json();
+
+      if (data.code !== 3000 || !data.data) {
+        return res.status(500).json({ error: "Zoho API error", details: data });
+      }
+
       allData.push(...data.data);
 
-      // Look for the next cursor in the response header
-      nextCursor = response.headers.get("record_cursor");
-    } while (nextCursor);
+      // Get record_cursor from response headers
+      const rawCursor = response.headers.get("record_cursor");
+      if (rawCursor) {
+        cursor = rawCursor;
+      } else {
+        hasMore = false;
+      }
+    }
 
     res.status(200).json({ code: 3000, data: allData });
   } catch (err) {
