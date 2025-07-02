@@ -1,6 +1,5 @@
 export default async function handler(req, res) {
   try {
-    // 1. Get Zoho token
     const tokenRes = await fetch(
       `${
         process.env.BASE_URL || "https://interactivefloorplan.vercel.app"
@@ -14,7 +13,7 @@ export default async function handler(req, res) {
 
     const accessToken = tokenData.token;
 
-    // 2. Start Bulk Read Job
+    // ✅ Try bulk read with NO body
     const bulkInitRes = await fetch(
       "https://www.zohoapis.com/creator/v2.1/bulk/mobaha_baytiraqi/interactive-floor-plan/report/Properties_List/read",
       {
@@ -23,9 +22,7 @@ export default async function handler(req, res) {
           Authorization: `Zoho-oauthtoken ${accessToken}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          file_type: "json",
-        }),
+        // ❌ Remove body entirely to avoid `EXTRA_KEY_FOUND_IN_JSON`
       }
     );
 
@@ -33,19 +30,21 @@ export default async function handler(req, res) {
     const jobId = bulkInitData?.job_id;
 
     if (!jobId) {
-      return res.status(500).json({
-        error: "Failed to create bulk read job",
-        details: bulkInitData,
-      });
+      return res
+        .status(500)
+        .json({
+          error: "Failed to create bulk read job",
+          details: bulkInitData,
+        });
     }
 
-    // 3. Poll Job Status
+    // 🕒 Poll for completion
     let status = "IN_PROGRESS";
     let attempts = 0;
     let downloadUrl = null;
 
     while (status === "IN_PROGRESS" && attempts < 10) {
-      await new Promise((r) => setTimeout(r, 2000)); // wait 2 seconds
+      await new Promise((r) => setTimeout(r, 2000));
       const pollRes = await fetch(
         `https://www.zohoapis.com/creator/v2.1/bulk/mobaha_baytiraqi/interactive-floor-plan/job/${jobId}`,
         {
@@ -67,7 +66,7 @@ export default async function handler(req, res) {
         .json({ error: "Bulk read job did not complete", status });
     }
 
-    // 4. Download and return data
+    // ✅ Download and return the full data
     const downloadRes = await fetch(downloadUrl);
     const fullData = await downloadRes.json();
 
