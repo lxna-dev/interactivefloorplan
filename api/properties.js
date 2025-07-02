@@ -19,7 +19,7 @@ export default async function handler(req, res) {
 
     while (hasMore) {
       const zohoRes = await fetch(
-        `https://creator.zoho.com/api/v2/mobaha_baytiraqi/interactive-floor-plan/report/Properties_List?page=${page}&page_size=200`,
+        `https://www.zohoapis.com/creator/v2.1/data/mobaha_baytiraqi/interactive-floor-plan/report/Properties_List/records?page=${page}&page_size=200`,
         {
           headers: {
             Authorization: `Zoho-oauthtoken ${accessToken}`,
