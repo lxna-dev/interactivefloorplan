@@ -1,5 +1,3 @@
-import JSZip from "jszip";
-
 export default async function handler(req, res) {
   try {
     const tokenRes = await fetch(
@@ -14,66 +12,39 @@ export default async function handler(req, res) {
     }
 
     const accessToken = tokenData.token;
+    const baseUrl =
+      "https://www.zohoapis.com/creator/v2.1/mobaha_baytiraqi/interactive-floor-plan/report/Properties_List";
 
-    // Step 1: Create bulk read job
-    const bulkInitRes = await fetch(
-      "https://www.zohoapis.com/creator/v2.1/bulk/mobaha_baytiraqi/interactive-floor-plan/report/Properties_List/read",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Zoho-oauthtoken ${accessToken}`,
-          "Content-Type": "application/json",
-        },
+    let allData = [];
+    let nextCursor = null;
+
+    do {
+      const url = new URL(baseUrl);
+      url.searchParams.set("max_records", "1000");
+
+      const headers = {
+        Authorization: `Zoho-oauthtoken ${accessToken}`,
+      };
+
+      if (nextCursor) {
+        headers["record_cursor"] = nextCursor;
       }
-    );
 
-    const bulkInitData = await bulkInitRes.json();
-    const jobId = bulkInitData?.details?.id;
+      const response = await fetch(url.toString(), { headers });
 
-    if (!jobId) {
-      return res.status(500).json({
-        error: "Failed to create bulk read job",
-        details: bulkInitData,
-      });
-    }
+      if (!response.ok) {
+        const err = await response.json();
+        return res.status(500).json({ error: "Zoho API error", details: err });
+      }
 
-    // Step 2: Poll for job completion
-    let status = "In-progress";
-    let attempts = 0;
-    let downloadUrl = null;
+      const data = await response.json();
+      allData.push(...data.data);
 
-    while (status === "In-progress" && attempts < 30) {
-      await new Promise((r) => setTimeout(r, 2000)); // wait 2s
-      const pollRes = await fetch(
-        `https://www.zohoapis.com/creator/v2.1/bulk/mobaha_baytiraqi/interactive-floor-plan/job/${jobId}`,
-        {
-          headers: {
-            Authorization: `Zoho-oauthtoken ${accessToken}`,
-          },
-        }
-      );
+      // Look for the next cursor in the response header
+      nextCursor = response.headers.get("record_cursor");
+    } while (nextCursor);
 
-      const pollData = await pollRes.json();
-      status = pollData.details?.status;
-      downloadUrl = pollData.details?.result?.download_url;
-      attempts++;
-    }
-
-    if (status !== "Completed" || !downloadUrl) {
-      return res
-        .status(500)
-        .json({ error: "Bulk read job did not complete", status });
-    }
-
-    // Step 3: Download ZIP and extract JSON
-    const downloadRes = await fetch(downloadUrl);
-    const zipBuffer = await downloadRes.arrayBuffer();
-    const zip = await JSZip.loadAsync(zipBuffer);
-    const firstFile = Object.keys(zip.files)[0];
-    const jsonContent = await zip.files[firstFile].async("string");
-    const records = JSON.parse(jsonContent);
-
-    res.status(200).json({ code: 3000, data: records.data || [] });
+    res.status(200).json({ code: 3000, data: allData });
   } catch (err) {
     res.status(500).json({ error: "Server error", message: err.message });
   }
