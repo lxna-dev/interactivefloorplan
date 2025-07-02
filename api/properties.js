@@ -1,3 +1,5 @@
+import JSZip from "jszip";
+
 export default async function handler(req, res) {
   try {
     const tokenRes = await fetch(
@@ -13,7 +15,7 @@ export default async function handler(req, res) {
 
     const accessToken = tokenData.token;
 
-    // ✅ Try bulk read with NO body
+    // Step 1: Create bulk read job
     const bulkInitRes = await fetch(
       "https://www.zohoapis.com/creator/v2.1/bulk/mobaha_baytiraqi/interactive-floor-plan/report/Properties_List/read",
       {
@@ -26,7 +28,7 @@ export default async function handler(req, res) {
     );
 
     const bulkInitData = await bulkInitRes.json();
-    const jobId = bulkInitData?.job_id;
+    const jobId = bulkInitData?.details?.id;
 
     if (!jobId) {
       return res.status(500).json({
@@ -35,13 +37,13 @@ export default async function handler(req, res) {
       });
     }
 
-    // 🕒 Poll for completion
-    let status = "IN_PROGRESS";
+    // Step 2: Poll for job completion
+    let status = "In-progress";
     let attempts = 0;
     let downloadUrl = null;
 
-    while (status === "IN_PROGRESS" && attempts < 10) {
-      await new Promise((r) => setTimeout(r, 2000));
+    while (status === "In-progress" && attempts < 10) {
+      await new Promise((r) => setTimeout(r, 2000)); // wait 2s
       const pollRes = await fetch(
         `https://www.zohoapis.com/creator/v2.1/bulk/mobaha_baytiraqi/interactive-floor-plan/job/${jobId}`,
         {
@@ -52,21 +54,26 @@ export default async function handler(req, res) {
       );
 
       const pollData = await pollRes.json();
-      status = pollData.status;
-      downloadUrl = pollData.result?.download_url;
+      status = pollData.details?.status;
+      downloadUrl = pollData.details?.result?.download_url;
       attempts++;
     }
 
-    if (status !== "COMPLETED" || !downloadUrl) {
+    if (status !== "Completed" || !downloadUrl) {
       return res
         .status(500)
         .json({ error: "Bulk read job did not complete", status });
     }
 
+    // Step 3: Download ZIP and extract JSON
     const downloadRes = await fetch(downloadUrl);
-    const fullData = await downloadRes.json();
+    const zipBuffer = await downloadRes.arrayBuffer();
+    const zip = await JSZip.loadAsync(zipBuffer);
+    const firstFile = Object.keys(zip.files)[0];
+    const jsonContent = await zip.files[firstFile].async("string");
+    const records = JSON.parse(jsonContent);
 
-    res.status(200).json({ code: 3000, data: fullData });
+    res.status(200).json({ code: 3000, data: records.data || [] });
   } catch (err) {
     res.status(500).json({ error: "Server error", message: err.message });
   }
