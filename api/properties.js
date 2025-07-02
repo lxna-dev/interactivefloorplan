@@ -22,7 +22,6 @@ export default async function handler(req, res) {
           Authorization: `Zoho-oauthtoken ${accessToken}`,
           "Content-Type": "application/json",
         },
-        // ❌ Remove body entirely to avoid `EXTRA_KEY_FOUND_IN_JSON`
       }
     );
 
@@ -30,12 +29,10 @@ export default async function handler(req, res) {
     const jobId = bulkInitData?.job_id;
 
     if (!jobId) {
-      return res
-        .status(500)
-        .json({
-          error: "Failed to create bulk read job",
-          details: bulkInitData,
-        });
+      return res.status(500).json({
+        error: "Failed to create bulk read job",
+        details: bulkInitData,
+      });
     }
 
     // 🕒 Poll for completion
