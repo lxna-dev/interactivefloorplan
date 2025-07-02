@@ -42,7 +42,7 @@ export default async function handler(req, res) {
     let attempts = 0;
     let downloadUrl = null;
 
-    while (status === "In-progress" && attempts < 10) {
+    while (status === "In-progress" && attempts < 30) {
       await new Promise((r) => setTimeout(r, 2000)); // wait 2s
       const pollRes = await fetch(
         `https://www.zohoapis.com/creator/v2.1/bulk/mobaha_baytiraqi/interactive-floor-plan/job/${jobId}`,
