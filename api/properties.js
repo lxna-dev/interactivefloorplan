@@ -63,7 +63,6 @@ export default async function handler(req, res) {
         .json({ error: "Bulk read job did not complete", status });
     }
 
-    // ✅ Download and return the full data
     const downloadRes = await fetch(downloadUrl);
     const fullData = await downloadRes.json();
 
