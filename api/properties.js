@@ -25,12 +25,6 @@ export default async function handler(req, res) {
         },
         body: JSON.stringify({
           file_type: "json",
-          fields: [
-            "ID",
-            "Property_Number",
-            "Status",
-            "Add_Developments.Development_Name",
-          ],
         }),
       }
     );
@@ -39,12 +33,10 @@ export default async function handler(req, res) {
     const jobId = bulkInitData?.job_id;
 
     if (!jobId) {
-      return res
-        .status(500)
-        .json({
-          error: "Failed to create bulk read job",
-          details: bulkInitData,
-        });
+      return res.status(500).json({
+        error: "Failed to create bulk read job",
+        details: bulkInitData,
+      });
     }
 
     // 3. Poll Job Status
