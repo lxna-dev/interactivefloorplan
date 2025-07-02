@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
     const accessToken = tokenData.token;
     const baseUrl =
-      "https://www.zohoapis.com/creator/v2.1/mobaha_baytiraqi/interactive-floor-plan/report/Properties_List";
+      "https://www.zohoapis.com/creator/v2.1/data/mobaha_baytiraqi/interactive-floor-plan/report/Properties_List";
 
     let allData = [];
     let hasMore = true;
