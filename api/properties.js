@@ -13,34 +13,31 @@ export default async function handler(req, res) {
 
     const accessToken = tokenData.token;
 
-    const allData = [];
-    let page = 1;
+    let allData = [];
     let hasMore = true;
+    let offset = 0;
 
     while (hasMore) {
-      const zohoRes = await fetch(
-        `https://www.zohoapis.com/creator/v2.1/data/mobaha_baytiraqi/interactive-floor-plan/report/Properties_List/records?page=${page}&page_size=200`,
-        {
-          headers: {
-            Authorization: `Zoho-oauthtoken ${accessToken}`,
-          },
-        }
-      );
+      const url = `https://creator.zoho.com/api/v2.1/mobaha_baytiraqi/interactive-floor-plan/report/Properties_List?max_records=1000&offset=${offset}`;
 
-      const result = await zohoRes.json();
+      const zohoRes = await fetch(url, {
+        headers: {
+          Authorization: `Zoho-oauthtoken ${accessToken}`,
+        },
+      });
 
-      if (result.code !== 3000 || !result.data) {
-        return res
-          .status(500)
-          .json({ error: "Zoho API error", details: result });
+      const data = await zohoRes.json();
+
+      if (data.code !== 3000 || !data.data) {
+        return res.status(500).json({ error: "Zoho API error", details: data });
       }
 
-      allData.push(...result.data);
+      allData.push(...data.data);
 
-      if (result.data.length < 200) {
+      if (data.data.length < 1000) {
         hasMore = false;
       } else {
-        page++;
+        offset += 1000;
       }
     }
 
